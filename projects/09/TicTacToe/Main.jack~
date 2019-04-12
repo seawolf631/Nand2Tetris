@@ -1,0 +1,68 @@
+class Main{
+      function void main(){
+      	       var Array row1;
+	       var Array row2;
+	       var Array row3;
+	       var Array border;
+	       var int i;
+	       int inputRow;
+	       int inputColumn;
+	       
+	       
+	       let i = 0;
+	       
+	       let row1 = " | | ";
+	       let row2 = " | | ";
+	       let row3 = " | | ";
+	       let border = "----";
+	       
+	       while(i < 9){
+
+	       	       do Output.printString(row1);
+		       do Output.printString(border);
+		       do Output.printString(row2);
+		       do Output.printString(border);
+		       do Output.printString(row3);
+
+		       let inputRow = Keyboard.readInt("Enter a Row: ");
+		       let inputColumn = Keyboard.readInt("Enter a Column: ");
+
+		       if(inputRow = 0){
+		       		   if(inputColumn = 0){
+				   		  let row1[0] = "X";
+				   }
+				   if(inputColumn = 1){
+				   		  let row1[1] = "X";
+				   }
+				   if(inputColumn = 2){
+				   		  let row1[2] = "X";
+					}
+		       }
+		       if(inputRow = 1){
+		       		   if(inputColumn = 0){
+				   		  let row2[0] = "X";
+				   }
+				   if(inputColumn = 1){
+				   		  let row2[1] = "X";
+				   }
+				   if(inputColumn = 2){
+				   		  let row2[2] = "X";
+				   }
+		       }
+		       if(inputRow = 2){
+		       		   if(inputColumn = 0){
+				   		  let row3[0] = "X";
+				   }
+				   if(inputColumn = 1){
+				   		  let row3[1] = "X";
+				   }
+				   if(inputColumn = 2){
+				   		  let row3[2] = "X";
+				   }
+		       }
+		       
+	       	       let i = i + 1;
+	       }
+	       return;
+      }
+}

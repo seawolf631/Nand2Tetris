@@ -1,0 +1,53 @@
+import sys
+import random
+import os
+import nltk
+
+#Tokenizer
+def tokenType(token):
+    keywordList = ['class', 'constructor', 'function', 'method', 'field', 'static' , 'var', 'int', 'char','boolean', 'void', 'true', 'false', 'null', 'this', 'let', 'do', 'if', 'else', 'while', 'return']
+    symbolList = ['{','}', '(',')', '[',']','.', ',',';','+','-','*','/','&','|','<','>','=','-']
+    if(token in keywordList):
+        return "KEYWORD"
+    elif(token in symbolList):
+        return "SYMBOL"
+    #elif(token.is_integer() and (int(token) >= 0) and (int(token) <= 32767) ):
+        #return "INT_CONST"
+    #elif(token[0] == \" and token[-1] == \"):
+    #    return "STRING_CONST"
+    else:
+        return "IDENTIFIER"
+
+#def keyWord():
+
+#def symbol():
+
+#def identifier():
+
+#def intVal():
+
+#def stringVal():
+
+
+
+#Start of Reading and Writing File
+
+for n in sys.argv[1:]:
+    fileName = n
+    readFile = open(fileName, 'r')
+    #writeFile = open(fileName + "Ttest.xml" ,"a")
+    fileContent = open(fileName).read()
+    tokens = nltk.word_tokenize(fileContent)
+    
+    #writeFile.write("<tokens>")
+    for line in readFile:
+        if line.strip() and (line[0:2] != "//") and (line[0:3] != "/**"):
+            tokens = nltk.word_tokenize(line)
+            for word in tokens:
+                print "<" + tokenType(word) + ">" + word + "</" + tokenType(word) + ">"
+            #print tokens
+            #print line
+
+    #writeFile.write("</tokens>")
+    readFile.close()
+    #writeFile.close()

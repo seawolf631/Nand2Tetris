@@ -1,0 +1,32 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class Parser{
+    static boolean fileOpen = false;
+    public Parser(String fileName){
+	try{
+	    FileReader fileReader = new FileReader(fileName);
+	    BufferedReader bufferedReader = new BufferedReader(fileReader);
+	    String line = null;
+	    while((line = bufferedReader.readLine()) != null){
+		fileOpen = true;
+		System.out.println(line);
+	    }
+	    bufferedReader.close();
+	}
+	catch(FileNotFoundException ex){
+	    System.out.println("Unable to open file '" + fileName + "'");
+	}
+	catch(IOException ex){
+	    ex.printStackTrace();
+	}
+    }
+    public static boolean hasMoreCommands(){
+	return fileOpen;
+    }
+    //public void advance(){}
+    //public String commandType(){}
+    //public String arg1(){}
+    //public int arg2(){}
+    public static void main(String[] args){}
+}

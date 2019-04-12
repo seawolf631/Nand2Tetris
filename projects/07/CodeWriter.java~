@@ -1,0 +1,33 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class CodeWriter{
+    FileWriter fileWriter;
+    static BufferedWriter bufferedWriter;
+    public CodeWriter(String fileOutput){
+	try{
+	    int indexOfDot = fileOutput.indexOf(".");
+	String newFileName = fileOutput.substring(0,indexOfDot) + ".asm";
+	this.fileWriter = new FileWriter(newFileName);
+	this.bufferedWriter = new BufferedWriter(fileWriter);
+	}
+	catch(FileNotFoundException ex){
+	    System.out.println("Unable to open file '" + fileOutput + "'");
+	}
+	catch(IOException ex){
+	    ex.printStackTrace();
+	}
+    }
+    public void setFileName(String fileName){}
+    public void writeArithmetic(String command){}
+    public void WritePushPop(){}
+    public void close(){
+	try{
+	    bufferedWriter.close();
+	}
+	catch(IOException ex){
+	    ex.printStackTrace();
+	}
+    }
+    public static void main(String[] args){}
+}

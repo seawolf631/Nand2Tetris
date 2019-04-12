@@ -1,0 +1,62 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+public class Assembler{
+    public static void main(String[] args){
+	String fileName = args[0];
+	int indexOfDot = fileName.indexOf(".");
+	String newFileName = fileName.substring(0,indexOfDot) + ".hack";
+	String line = null;
+	
+	try{
+	    // FileReader reads text files in the default encoding.
+            FileReader fileReader = new FileReader(fileName);
+	    FileWriter fileWriter = new FileWriter(newFileName);
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+	    while((line = bufferedReader.readLine()) != null){
+		int offset = line.indexOf("//");
+		if(-1 != offset)
+		    line = line.substring(0,offset);
+		if(line.length() > 0){
+		    System.out.println(line);
+		    String tempCommandType = Parser.commandType(line);
+		    System.out.println(tempCommandType);
+		
+		    if(tempCommandType.equals("A_COMMAND")){
+			String toBinary = Parser.symbol(line);
+			int binaryToInt = Integer.parseInt(toBinary);
+			System.out.println("0"+String.format("%015d",Integer.parseInt(Integer.toBinaryString(binaryToInt))));
+			bufferedWriter.write("0"+String.format("%015d",Integer.parseInt(Integer.toBinaryString(binaryToInt))));
+			bufferedWriter.newLine();
+		    }
+		    else if(tempCommandType.equals("C_COMMAND")){
+			String tempDest = Parser.dest(line);
+		    	String tempComp = Parser.comp(line);
+		    	String tempJump = Parser.jump(line);
+			System.out.println("tempDest:"+tempDest+"  tempComp:"+tempComp+"  tempJump:"+tempJump);
+			System.out.println("111"+Code.comp(tempComp)+Code.dest(tempDest)+Code.jump(tempJump));
+			bufferedWriter.write("111"+Code.comp(tempComp)+Code.dest(tempDest)+Code.jump(tempJump));
+			bufferedWriter.newLine();
+		    }
+	    //else if(tempCommandType.equals("L_COMMAND")){
+
+	    //}
+	    }
+	    }
+	    bufferedReader.close();
+	    bufferedWriter.close();
+	}
+	catch(FileNotFoundException ex){
+	    System.out.println("Unable to open file '" + fileName + "'");
+	}
+	
+        catch(IOException ex) {
+            System.out.println("Error reading file '"  + fileName + "'");                  
+            // Or we could just do this: 
+            // ex.printStackTrace();
+        }
+	
+    }
+}

@@ -1,0 +1,74 @@
+class Main{
+      function void main(){
+      	       var String row1;
+	       var String row2;
+	       var String row3;
+	       var String border;
+	       var int i;
+	       var int inputRow;
+	       var int inputColumn;
+	       
+	       
+	       let i = 0;
+	       
+	       let row1 = " | | ";
+	       let row2 = " | | ";
+	       let row3 = " | | ";
+	       let border = "------";
+	       
+	       while(i < 9){
+
+	       	       do Output.printString(row1);
+		       do Output.println();
+		       do Output.printString(border);
+		       do Output.println();
+		       do Output.printString(row2);
+		       do Output.println();
+		       do Output.printString(border);
+		       do Output.println();
+		       do Output.printString(row3);
+		       do Output.println();
+
+		       let inputRow = Keyboard.readInt("Enter a Row: ");
+		       do Output.println();
+		       let inputColumn = Keyboard.readInt("Enter a Column: ");
+
+		       if(inputRow = 0){
+		       		   if(inputColumn = 0){
+				   		  do row1.setCharAt(0,"X");
+				   }
+				   if(inputColumn = 1){
+				   		  do row1.setCharAt(2,"X");
+				   }
+				   if(inputColumn = 2){
+				   		  do row1.setCharAt(4,"X");
+					}
+		       }
+		       if(inputRow = 1){
+		       		   if(inputColumn = 0){
+				   		  do row2.setCharAt(0,"X");
+				   }
+				   if(inputColumn = 1){
+				   		  do row2.setCharAt(2, "X");
+				   }
+				   if(inputColumn = 2){
+				   		  do row2.setCharAt(4, "X");
+				   }
+		       }
+		       if(inputRow = 2){
+		       		   if(inputColumn = 0){
+				   		  do row3.setCharAt(0,"X");
+				   }
+				   if(inputColumn = 1){
+				   		  do row3.setCharAt(2,"X");
+				   }
+				   if(inputColumn = 2){
+				   		  do row3.setCharAt(4,"X");
+				   }
+		       }
+		       
+	       	       let i = i + 1;
+	       }
+	       return;
+      }
+}

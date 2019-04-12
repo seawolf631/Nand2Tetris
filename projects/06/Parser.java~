@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+public class Parser{
+    private String fileName;
+    static String currentCommand;
+    static ArrayList<String> fileLines = new ArrayList<String>();
+    public Parser(String fileName){
+	
+        
+    }
+    //public static boolean hasMoreCommands(){}
+    public void advance(){
+	
+    }
+    public static String commandType(String line){
+	    if(line.charAt(0) == '@')
+		return "A_COMMAND";
+	    else if(line.charAt(0) == '(')
+		return "L_COMMAND";
+	    else
+		return "C_COMMAND";
+      
+    }
+    public static String symbol(){
+	int i = 1;
+	String temp = null;
+	while(currentCommand.charAt(0) != ' '){
+	    temp += currentCommand.charAt(i);
+	    i++;
+	}
+	return temp;
+    }
+    //public String dest(){}
+//public String comp(){}
+//public String jump(){}
+    public static void main(String[] args){}
+}
