@@ -12,8 +12,11 @@ def removeComments(string):
 #Function to Determine Type of Token
 def tokenType(string):
     keywordList = ['class','constructor','function','method','field','static','var','int','char','boolean','void','true','false','null','this','let','do','if','else','while','return']
+    symbolList = ['{','}','(',')','[',']','.',',',';','+','-','*','/','&','|','<','>','=','~']
     if string in keywordList:
         return "keyword"
+    elif string in symbolList:
+        return "symbol"
 
 #Reading & Writing File
 for n in sys.argv[1:]:
@@ -30,8 +33,10 @@ for n in sys.argv[1:]:
             for line in readFile:
                 noCommentsLine = removeComments(line)
                 cleanedLine = noCommentsLine.strip()
-                splitCleanedLine = re.split("\s" , cleanedLine)
-                if splitCleanedLine != ['']:
+                #Adding Space Before & After Symbols
+                addSpaceBefore = re.sub(r"(\(|\)|\-|\.|\;|\[|\])",r" \1 ",cleanedLine)
+                splitCleanedLine = addSpaceBefore.split()
+                if splitCleanedLine != []:
                     print(splitCleanedLine)
 
             tokenWriteFile.write("</tokens>")
