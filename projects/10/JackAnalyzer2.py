@@ -17,6 +17,10 @@ def tokenType(string):
         return "keyword"
     elif string in symbolList:
         return "symbol"
+    elif string.isdigit():
+        return "integerConstant"
+    else:
+        return "identifier"
 
 #Reading & Writing File
 for n in sys.argv[1:]:
@@ -38,6 +42,8 @@ for n in sys.argv[1:]:
                 splitCleanedLine = addSpaceBefore.split()
                 if splitCleanedLine != []:
                     print(splitCleanedLine)
+                    for string in splitCleanedLine:
+                        tokenWriteFile.write("<" + tokenType(string) + ">" + string + "</" + tokenType(string) + ">\n")
 
             tokenWriteFile.write("</tokens>")
 
