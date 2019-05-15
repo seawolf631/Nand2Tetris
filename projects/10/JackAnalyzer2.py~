@@ -17,6 +17,10 @@ def tokenType(string):
         return "keyword"
     elif string in symbolList:
         return "symbol"
+    elif string.isdigit():
+        return "integerConstant"
+    else:
+        return "identifier"
 
 #Reading & Writing File
 for n in sys.argv[1:]:
@@ -27,17 +31,20 @@ for n in sys.argv[1:]:
             periodIndex = fileName.index(".")
             tokenWriteFile = open(directory + "/" + fileName[:periodIndex] + "Ttest.xml", "a")
             
-            tokenWriteFile.write("<tokens>")
+            tokenWriteFile.write("<tokens>\n")
 
             #Going through Line by Line of ReadFile
             for line in readFile:
                 noCommentsLine = removeComments(line)
                 cleanedLine = noCommentsLine.strip()
                 #Adding Space Before & After Symbols
-                addSpaceBefore = re.sub(r"(\(|\)|\-|\.|\;|\[|\])",r" \1 ",cleanedLine)
+                retrieveStrings = re.sub(r"\"*.\"", r" hey ",cleanedLine)
+                addSpaceBefore = re.sub(r"(\(|\)|\-|\.|\;|\[|\]|,)",r" \1 ",retrieveStrings)
                 splitCleanedLine = addSpaceBefore.split()
                 if splitCleanedLine != []:
                     print(splitCleanedLine)
+                    for string in splitCleanedLine:
+                        tokenWriteFile.write("<" + tokenType(string) + ">" + string + "</" + tokenType(string) + ">\n")
 
             tokenWriteFile.write("</tokens>")
 

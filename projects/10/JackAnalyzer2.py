@@ -7,6 +7,8 @@ import re
 def removeComments(string):
     string = re.sub(re.compile("/\*.*?\*/",re.DOTALL ) ,"" ,string) # remove all occurrences streamed comments (/*COMMENT */) from string
     string = re.sub(re.compile("//.*?\n" ) ,"" ,string) # remove all occurrence single-line comments (//COMMENT\n ) from string
+    string = re.sub(re.compile("/\*\*.*") , "", string)
+    string = re.sub(re.compile("^\s\*.*") , "", string)
     return string
 
 #Function to Determine Type of Token
@@ -22,6 +24,20 @@ def tokenType(string):
     else:
         return "identifier"
 
+#Function to Transform Symbol Token into XML form
+def symbolTransform(string):
+    if tokenType(string) == "symbol":
+        if string == "<":
+            return "&lt;"
+        elif string == "&":
+            return "&amp;"
+        elif string == ">":
+            return "&gt;"
+        else:
+            return string
+    else:
+        return string
+
 #Reading & Writing File
 for n in sys.argv[1:]:
     directory = n
@@ -31,19 +47,30 @@ for n in sys.argv[1:]:
             periodIndex = fileName.index(".")
             tokenWriteFile = open(directory + "/" + fileName[:periodIndex] + "Ttest.xml", "a")
             
-            tokenWriteFile.write("<tokens>")
+            tokenWriteFile.write("<tokens>\n")
 
             #Going through Line by Line of ReadFile
             for line in readFile:
                 noCommentsLine = removeComments(line)
                 cleanedLine = noCommentsLine.strip()
                 #Adding Space Before & After Symbols
-                addSpaceBefore = re.sub(r"(\(|\)|\-|\.|\;|\[|\])",r" \1 ",cleanedLine)
+                #retrieveStrings = re.sub(r"\"", r"  ",cleanedLine)
+                addSpaceBefore = re.sub(r"(\(|\)|\-|\.|\;|\[|\]|,|~)",r" \1 ",cleanedLine)
                 splitCleanedLine = addSpaceBefore.split()
                 if splitCleanedLine != []:
                     print(splitCleanedLine)
+                    isString = False
                     for string in splitCleanedLine:
-                        tokenWriteFile.write("<" + tokenType(string) + ">" + string + "</" + tokenType(string) + ">\n")
+                        if(string[0] == "\""):
+                            isString = True
+                            tokenWriteFile.write("<stringConstant>" + string[1:] + " ")
+                        elif(isString and string[-1] != "\""):
+                            tokenWriteFile.write(string + " ")
+                        elif(string[-1] == "\""):
+                            isString = False
+                            tokenWriteFile.write(string[:-1] + "</stringConstant>\n")
+                        else:
+                            tokenWriteFile.write("<" + tokenType(string) + ">" + symbolTransform(string) + "</" + tokenType(string) + ">\n")
 
             tokenWriteFile.write("</tokens>")
 
