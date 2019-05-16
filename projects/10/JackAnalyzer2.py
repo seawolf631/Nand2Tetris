@@ -61,14 +61,14 @@ for n in sys.argv[1:]:
                     print(splitCleanedLine)
                     isString = False
                     for string in splitCleanedLine:
-                        if(string[0] == "\""):
-                            isString = True
-                            tokenWriteFile.write("<stringConstant>" + string[1:] + " ")
+                        if(string[0] == "\"" or string[-1]=="\""):
+                            isString = not isString
+                            if isString:
+                                tokenWriteFile.write("<stringConstant>" + string[1:] + " ")
+                            elif not isString:
+                                tokenWriteFile.write(string[:-1] + "</stringConstant>\n")
                         elif(isString and string[-1] != "\""):
                             tokenWriteFile.write(string + " ")
-                        elif(string[-1] == "\""):
-                            isString = False
-                            tokenWriteFile.write(string[:-1] + "</stringConstant>\n")
                         else:
                             tokenWriteFile.write("<" + tokenType(string) + ">" + symbolTransform(string) + "</" + tokenType(string) + ">\n")
 
